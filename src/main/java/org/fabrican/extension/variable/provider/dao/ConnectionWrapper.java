@@ -12,30 +12,30 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class ConnectionWrapper{
-	private Connection c;
-	private HashMap<String, PreparedStatement> stmts = new HashMap<>();
+    private Connection c;
+    private HashMap<String, PreparedStatement> stmts = new HashMap<>();
 
-	public ConnectionWrapper(Connection c){
-		this.c = c;
-	}
-	
-	public void close(){
-		try {
-			c.close();
-		}catch(Exception e){
-			
-		}
-	}
-	
-	public PreparedStatement getStatement(String name) {
-			return stmts.get(name);
-	}
-
-	public PreparedStatement prepareStatement(String key, String stmt) throws SQLException {
-	    PreparedStatement ps = c.prepareStatement(stmt);
-	    stmts.put(key, ps);
-	    return ps;
+    public ConnectionWrapper(Connection c){
+        this.c = c;
     }
-	
-	
+    
+    public void close(){
+        try {
+            c.close();
+        }catch(Exception e){
+            
+        }
+    }
+    
+    public PreparedStatement getStatement(String name) {
+            return stmts.get(name);
+    }
+
+    public PreparedStatement prepareStatement(String key, String stmt) throws SQLException {
+        PreparedStatement ps = c.prepareStatement(stmt);
+        stmts.put(key, ps);
+        return ps;
+    }
+    
+    
 }

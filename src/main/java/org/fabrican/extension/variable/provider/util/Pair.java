@@ -7,26 +7,26 @@
 package org.fabrican.extension.variable.provider.util;
 
 public class Pair<T, U> {
-	private T left;
-	private U right;
-	public Pair(){
-		
-	}
-	public Pair(T l, U r){
-		this.left = l;
-		this.right = r;
-	}
-	public T left(){
-		return left;
-	}
-	public U right(){
-		return right;
-	}
-	public void setLeft(T l){
-		this.left = l;
-	}
-	public void setRight(U r){
-		this.right = r;
-	}
+    private T left;
+    private U right;
+    public Pair(){
+        
+    }
+    public Pair(T l, U r){
+        this.left = l;
+        this.right = r;
+    }
+    public T left(){
+        return left;
+    }
+    public U right(){
+        return right;
+    }
+    public void setLeft(T l){
+        this.left = l;
+    }
+    public void setRight(U r){
+        this.right = r;
+    }
 
 }

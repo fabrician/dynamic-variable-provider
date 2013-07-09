@@ -14,29 +14,29 @@ import java.util.List;
 
 public class SmallRuleSet extends RuleSet{
 
-	@Override
+    @Override
     public boolean isMatchCase()  {
-		throw new RuntimeException("Operation not supported");
+        throw new RuntimeException("Operation not supported");
     }
 
-	@Override
+    @Override
     public void setMatchCase(boolean matchCase) {
-		throw new RuntimeException("Operation not supported");
+        throw new RuntimeException("Operation not supported");
     }
 
-	@Override
+    @Override
     public List<Rule> getRules() {
-		throw new RuntimeException("Operation not supported");
+        throw new RuntimeException("Operation not supported");
     }
 
-	@Override
+    @Override
     public void setRules(byte[][] bAryAry) throws IOException {
-		throw new RuntimeException("Operation not supported");
+        throw new RuntimeException("Operation not supported");
     }
 
-	@Override
+    @Override
     protected Object clone() throws CloneNotSupportedException {
-		throw new RuntimeException("Operation not supported");
+        throw new RuntimeException("Operation not supported");
     }
 
 }
