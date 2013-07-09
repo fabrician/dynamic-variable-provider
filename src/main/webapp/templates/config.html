@@ -1,0 +1,26 @@
+
+      <h2>JDBC Connection</h2>
+      <p>Configure Web Server's JDBC Connections, which is stored using Java Preference API; The Web Application caches database aggressively as if no one else updates the Variable Providers table, 
+      use the "Destroy Cache" button to clean up the cache if the database is updated by other sources.
+      </p>
+
+
+    <form>
+      <fieldset>
+        <legend>Connected: {{config.connected}}</legend>
+        <label>Driver</label>
+        <input type="text" ng-model="config.driver" placeholder="JDBC Driver…"/>
+        <label>Url</label>
+        <input type="text" ng-model="config.url" placeholder="JDBC Url…"/> 
+        <label>Username</label>
+        <input type="text" ng-model="config.user" placehodler="User name..."/>
+        <label>Password</label>
+        <input type="password" ng-model="config.pass" placehodler="User password..."/>
+        <label></label>
+        <button ng-click="submit()" class="btn btn-primary">Submit</button>
+        <button ng-click="destroyCache()" class="btn btn-info">Destroy Cache</button>
+        <button ng-click="cancel()" class="btn">Cancel</button> 
+      </fieldset>
+    </form>
+
+    

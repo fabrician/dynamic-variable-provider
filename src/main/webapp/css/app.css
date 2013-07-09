@@ -1,0 +1,10 @@
+tr.selected, .table-striped tbody > tr:nth-child(2n+1).selected > td {
+  background-color: #0088cc;
+  color: #ffffff;
+}
+
+
+.app_error {
+  color: #b94a48;
+}
+

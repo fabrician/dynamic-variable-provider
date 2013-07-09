@@ -1,0 +1,5 @@
+target/
+testBuild.cmd
+t1.cmd
+SilverFabricSDK.jar
+hsqldb/lib/hsqldb.jar

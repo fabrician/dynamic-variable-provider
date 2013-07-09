@@ -1,0 +1,10 @@
+<dynamicVariableProvider class="org.fabrican.extension.variable.provider.VariableProviderProxy">
+    <property name="name" value="MY_PROVIDER_NAME"/>
+    <property name="description" value="MY_PROVIDER_DESCRIPTION"/>
+    <property name="enabled" value="true"/>
+    <property name="serverUrl" value="http://{host}:{port}/{app_context}/variables/{MY_PROVIDER_NAME}"/>
+    <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
+    <property name="primaryKey" value="engineInfo.properties.cpuIdString"/>
+    <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
+    <property name="secondaryKey" value="stackInfo.name"/>
+</dynamicVariableProvider>

@@ -1,0 +1,88 @@
+
+      <h2>List of Variable Providers</h2>
+      <p>User the "Create" button to add new Variable Providers; Click on a Variable Provider, choose the action buttons on the write pane to edit/copy/remove the provider; Use the "Configure" to configure JDBC Connection.  
+      </p>
+
+
+<div class="container-fluid" style="padding-left:0px; padding-right:0px;margin-top:15px">
+<div class="row-fluid">
+<div class="span2">
+    <div class="btn-group btn-group-vertical">
+      <button class="btn btn-info" style="width:90px" ng-click="create()">Create</button>
+      <div style="margin-top:10px;"></div>
+      <button class="btn btn-info rowAction" style="width:90px" ng-click="edit()" disabled='disabled'>Edit</button>  
+      <button class="btn btn-info rowAction" style="width:90px" ng-click="remove()" disabled='disabled'>Remove</button>
+      <button class="btn btn-info rowAction" style="width:90px" ng-click="copy()" disabled='disabled'>Copy</button>
+    </div>
+     
+     
+ <!--Sidebar content-->
+</div>
+<div class="span10">
+<!--Body content-->
+    <div class="row">
+     <form class="form-search pull-right" style="margin-bottom:5px;">
+           <div class="input-append" >
+             <input type="text" class="search-query" ng-model='search'>
+             <button type="submit" class="btn" ng-click="doSearch()">Search</button>
+           </div>
+     </form>
+    </div>
+    <div >
+
+      <table class="table table-striped">
+        <tr>
+          <th style="width:10%;">#</th>
+          <th style="width:30%;"><a ng-click="sortBy('name')">Name</a>
+            <div style="display:inline; margin-left:5px;width:20px;">
+            <img src="images/up_arrow.gif" style="position:absolute;" ng-show="sorting.column=='name' && sorting.ascending==true"/>
+            <img src="images/down_arrow.gif" style="position:absolute;" ng-show="sorting.column=='name' && sorting.ascending==false"/>
+           </div>
+          </th>          
+          <th style="width:60%;"><a ng-click="sortBy('desc')">Description</a>
+            <div style="display:inline; margin-left:5px;width:20px;">
+            <img src="images/up_arrow.gif" style="position:absolute;" ng-show="sorting.column=='desc' && sorting.ascending==true"/>
+            <img src="images/down_arrow.gif" style="position:absolute;" ng-show="sorting.column=='desc' && sorting.ascending==false"/>
+           </div>
+          </th>          
+        </tr>
+        <tr ng-repeat="r in stagingList" ng-click="selectRow(this)" class="listRow">
+          <td>{{(currentPage - 1) * pageSize + $index + 1}}</td>
+          <td>{{r.name}}</td>
+          <td>{{r.desc}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <ul>
+        <li ng-repeat="p in pagination" class="{{p.status}}">
+          <a ng-click="gotoPage(p.page)">{{p.value}}</a>
+        </li>
+      </ul>
+    </div>
+    <div id="copyModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="copyModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="copyModalLabel">Copy Variable Provider</h3>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label">Copy to</label>
+            <div class="controls">
+              <input ng-model="copyTo" placeholder="New name" required/>
+            </div>
+          </div>      
+        <form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="doCopy()">Submit</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      </div>
+    </div>
+
+
+</div>
+</div>
+</div>
