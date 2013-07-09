@@ -211,8 +211,12 @@ myModel.controller('ruleSetCtrl', ['$scope', 'ruleSetService', '$routeParams', '
                      });
       $scope.createNew = false;
     } else {
-      $scope.ruleSet = {rules:[]};
-      $scope.rules = $scope.ruleSet.rules;
+      $scope.ruleSet = {rules:[]}; 
+      $scope.pagination = [];
+      $scope.stagingList = [];
+      $scope.currentPage = 1;
+      $scope.pageSize = 5;     
+      $scope.sorting = { column: '', ascending : true }; 
       $scope.createNew = true;
     }
     $scope.search = "";
