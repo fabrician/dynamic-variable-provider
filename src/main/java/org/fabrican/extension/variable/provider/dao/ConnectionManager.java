@@ -15,133 +15,136 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionManager {
-    private static final int POOL_SIZE=5;
-    private LinkedList<ConnectionWrapper> connPools = new LinkedList<>();
-    private ConnectionWrapper[] conns = null;
-    private Lock poolLock = new ReentrantLock();
-    private Condition notEmpty  = poolLock.newCondition(); 
-    private Condition transitionLock  = poolLock.newCondition(); 
-    private boolean inTransition = false;
-    private String driver, url, user, pass;
-    
-    
-    public ConnectionWrapper getConnection() throws InterruptedException{
-        poolLock.lock();
-        try {
-            while (connPools.isEmpty() && inTransition){
-                notEmpty.wait();
-            }
-            return connPools.removeFirst();
-        } finally {
-            poolLock.unlock();
-        }
-    }
-    
-    public void releaseConnection(ConnectionWrapper c){
-        poolLock.lock();
-        try {
-            if ( !inTransition ){
-                connPools.addFirst(c);
-                notEmpty.signal();
-            }
-        } finally {
-            poolLock.unlock();
-        }
-    }
+	private static final int POOL_SIZE=5;
+	private LinkedList<ConnectionWrapper> connPools = new LinkedList<>();
+	private ConnectionWrapper[] conns = null;
+	private Lock poolLock = new ReentrantLock();
+	private Condition accessCond  = poolLock.newCondition(); 
+	private boolean inTransition = false;
+	private String driver, url, user, pass;
+	
+	
+	public ConnectionWrapper getConnection() throws InterruptedException{
+		poolLock.lock();
+		try {
+			while (conns != null && connPools.isEmpty() || inTransition){
+				accessCond.wait();
+			}
+			if ( conns == null ){
+				return null;
+			} else {
+				return connPools.removeFirst();
+			}
+		} finally {
+			poolLock.unlock();
+		}
+	}
+	
+	public void releaseConnection(ConnectionWrapper c){
+		poolLock.lock();
+		try {
+			if ( !inTransition ){
+				connPools.addFirst(c);
+				accessCond.signal();
+			}
+		} finally {
+			poolLock.unlock();
+		}
+	}
 
-    public boolean resetConnection(String driver, String url, String username, String password) throws InterruptedException, ClassNotFoundException, SQLException{
-        Class.forName(driver);
+	public boolean resetConnection(String driver, String url, String username, String password) throws InterruptedException, ClassNotFoundException, SQLException{
+		Class.forName(driver);
         LinkedList<ConnectionWrapper> pool = new LinkedList<>();
         for ( int i = 0; i < POOL_SIZE; i++ ){
-            pool.add(new ConnectionWrapper(DriverManager.getConnection(url, username, password)));
+        	pool.add(new ConnectionWrapper(DriverManager.getConnection(url, username, password)));
         }
-        poolLock.lock();
-        try {
-            while ( inTransition ){
-                transitionLock.wait();
-            }
-            inTransition = true;
-        } finally {
-            poolLock.unlock();
-        }
-        try {
-            if ( conns != null ){
-                for ( ConnectionWrapper c : conns){
-                    c.close();
-                }
-            } else {
-                conns = new ConnectionWrapper[POOL_SIZE];
-            }
-            Iterator<ConnectionWrapper> iter = pool.iterator();
-            for ( int i = 0; i < POOL_SIZE; i++ ){
-                conns[i] = iter.next();
-            }
-            connPools = pool;
-            pool = null;
-            setDriver(driver);
-            setUrl(url);
-            setUser(username);
-            setPass(password);
-            return true;
-        } finally {
-            poolLock.lock();
-            try {
-                inTransition = false;
-                transitionLock.signal();
-            } finally {
-                poolLock.unlock();
-            }
-            if ( pool != null ){
-                for ( ConnectionWrapper c : pool ){
-                    c.close();
-                }
-            }
-        }
-    }
-    
-    public boolean connected(){
-        poolLock.lock();
-        try {
-            return conns != null && !inTransition;
-        } finally {
-            poolLock.unlock();
-        }
+		poolLock.lock();
+		try {
+			while ( inTransition ){
+				accessCond.wait();
+			}
+			inTransition = true;
+		} finally {
+			poolLock.unlock();
+		}
+		try {
+			if ( conns != null ){
+				for ( ConnectionWrapper c : conns){
+					c.close();
+				}
+			} else {
+				conns = new ConnectionWrapper[POOL_SIZE];
+			}
+			Iterator<ConnectionWrapper> iter = pool.iterator();
+	        for ( int i = 0; i < POOL_SIZE; i++ ){
+	        	conns[i] = iter.next();
+	        }
+	        connPools = pool;
+	        pool = null;
+	        setDriver(driver);
+	        setUrl(url);
+	        setUser(username);
+	        setPass(password);
+	        return true;
+		} finally {
+			poolLock.lock();
+			try {
+				inTransition = false;
+				accessCond.signal();
+			} finally {
+				poolLock.unlock();
+			}
+			if ( pool != null ){
+				for ( ConnectionWrapper c : pool ){
+					c.close();
+				}
+			}
+		}
+	}
+	
+	public boolean connected(){
+		poolLock.lock();
+		try {
+			return conns != null && !inTransition;
+		} finally {
+			poolLock.unlock();
+		}
+	}
+
+	public String getDriver() {
+    	return driver;
     }
 
-    public String getDriver() {
-        return driver;
+	public void setDriver(String driver) {
+    	this.driver = driver;
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
+	public String getUrl() {
+    	return url;
     }
 
-    public String getUrl() {
-        return url;
+	public void setUrl(String url) {
+    	this.url = url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+	public String getUser() {
+    	return user;
     }
 
-    public String getUser() {
-        return user;
+	public void setUser(String user) {
+    	this.user = user;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+	public String getPass() {
+    	return pass;
     }
 
-    public String getPass() {
-        return pass;
+	public void setPass(String pass) {
+    	this.pass = pass;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    
-    
-    
+	
+	
+	
 
 }
