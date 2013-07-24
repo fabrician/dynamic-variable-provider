@@ -1,21 +1,21 @@
 <assembly>
-  <id>bin</id>
+  <baseDirectory>dvp-${project.version}</baseDirectory>
   <formats>
     <format>tar.gz</format>
     <format>zip</format>
   </formats>
+    <files>
+      <file>
+        <source>target/${project.artifactId}-${project.version}.war</source>
+        <outputDirectory>webapps</outputDirectory>
+	<destName>dvp.war</destName>
+      </file>
+    </files>    
   <fileSets>
     <fileSet>
       <includes>
         <include>README*</include>
         <include>LICENSE*</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>target</directory>
-      <outputDirectory>webapps</outputDirectory>
-      <includes>
-        <include>dynamic*.war</include>
       </includes>
     </fileSet>
     <fileSet>

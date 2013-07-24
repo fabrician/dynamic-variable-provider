@@ -42,11 +42,11 @@ Build
 ```
 mvn package
 ```
-look into target/dynamic.variable.provider-1.0-SNAPSHOT-bin.zip
+look into target/dynamic.variable.provider-1.0-SNAPSHOT.zip
    
 Installation
 --------------------------------------
-Unzip target/dynamic.variable.provider-1.0-SNAPSHOT-bin.zip.
+Unzip target/dynamic.variable.provider-1.0-SNAPSHOT.zip.
 * ./variableProviders contains the "Dynamic Variable Providers", it needs to be deployed into Silver Fabric 5.5 server.
 * ./webapps contains a '.war' file for the "Web Application", it can be deployed to any J2EE web server
 * ./hsqldb contains the sample hsqldb database. To start it just call either "run.bat" or "run.sh".
@@ -60,7 +60,7 @@ Here is an example:
     <property name="name" value="test"/>
     <property name="description" value="MY_PROVIDER_DESCRIPTION"/>
     <property name="enabled" value="true"/>
-    <property name="serverUrl" value="http://localhost:9090/vpw/variables/test"/>
+    <property name="serverUrl" value="http://localhost:9090/dvp/variables/test"/>
     <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
     <property name="primaryKey" value="engineInfo.properties.USERNAME"/>
     <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
@@ -69,7 +69,7 @@ Here is an example:
 ```
 In this example:
 * you need to create a variable provider "test" in the "Web Application"
-* the context of "Web Application" is "vpw"
+* the context of "Web Application" is "dvp"
 * you can configure "primaryKey" and "secondaryKey" using "commons-jexl" expression. The expression must be started 
 with either "engineInfo.", "stackInfo." or "componentInfo.
 
