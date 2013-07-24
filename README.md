@@ -48,7 +48,7 @@ Installation
 --------------------------------------
 Unzip target/dynamic.variable.provider-1.0-SNAPSHOT.zip.
 * ./variableProviders contains the "Dynamic Variable Providers", it needs to be deployed into Silver Fabric 5.5 server.
-* ./webapps contains a '.war' file for the "Web Application", it can be deployed to any J2EE web server
+* ./webapps contains a '.war' file for the "Web Application", it can be deployed to a web server that supports Servlet 3.0 API.
 * ./hsqldb contains the sample hsqldb database. To start it just call either "run.bat" or "run.sh".
  
 Configure Dynamic Variable Provider
