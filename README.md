@@ -36,8 +36,6 @@ Supported Platforms
 Required 3rd Libraries before Build
 --------------------------------------
 * Download SilverFabricSDK.jar from Silver Fabric 5.5, copy it to the current Directory. See property "fabric-location" in pom.xml
-* The project ships a sample HSQLDB database server that the "Web Application" requires. To run this database, you need to copy 
-fabric/webapps/livecluster/WEB-INF/etc/db/hsqldb/lib/hsqldb.jar to ./hsqldb/lib. This is actually HSQLDB version 1.73.
 
 Build
 --------------------------------------

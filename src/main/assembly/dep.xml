@@ -24,6 +24,7 @@
       <includes>
         <include>lib/**</include>
         <include>run.*</include>
+        <include>server.properties</include>
         <include>vprovider.properties</include>
        <include>vprovider.script</include>
       </includes>
@@ -43,4 +44,12 @@
       </includes>
     </fileSet>           
   </fileSets>  
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>hsqldb/lib</outputDirectory>
+      <includes>
+        <include>hsqldb:hsqldb</include>
+      </includes>
+    </dependencySet>
+   </dependencySets>
 </assembly>
