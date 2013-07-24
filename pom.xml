@@ -32,9 +32,20 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.4</version>
-                <configuration>
-                    <descriptor>src/main/assembly/dep.xml</descriptor>
-                </configuration>
+                <executions>
+                    <execution>
+                        <id>distribution</id>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/dep.xml</descriptor>
+	                    </descriptors>
+                        </configuration>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>

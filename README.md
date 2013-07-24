@@ -40,7 +40,7 @@ Required 3rd Libraries before Build
 Build
 --------------------------------------
 ```
-mvn assembly:assembly
+mvn package
 ```
 look into target/dynamic.variable.provider-1.0-SNAPSHOT-bin.zip
    
