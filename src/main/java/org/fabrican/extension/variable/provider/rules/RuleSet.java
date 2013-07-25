@@ -54,6 +54,10 @@ public class RuleSet implements Cloneable{
     }
     
     public HashMap<String, String> evaluate(String pKey, String sKey) {
+        HashMap<String, String> result = new HashMap<>();
+        if ( pKey == null || sKey == null ){
+            return result;
+        }
         HashMap<String, Rule > staging = new HashMap<>();
         for (Rule r : rules ){
             if ( r.evaluate(pKey, sKey, !isMatchCase()) ){
@@ -63,7 +67,6 @@ public class RuleSet implements Cloneable{
                 }
             }
         }
-        HashMap<String, String> result = new HashMap<>();
         for (Entry<String, Rule> e : staging.entrySet()){
             result.put(e.getKey(), e.getValue().getVValue());
         }

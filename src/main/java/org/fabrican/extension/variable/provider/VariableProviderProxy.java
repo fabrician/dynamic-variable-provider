@@ -52,7 +52,7 @@ public class VariableProviderProxy extends AbstractDynamicVariableProvider {
         String u = getServerURL();
         try {
             u += "?primary=" + (p == null ? "" : URLEncoder.encode(p.trim(), "utf-8"));
-            u += "&secondary=" + (p == null ? "" : URLEncoder.encode(p.trim(), "utf-8"));
+            u += "&secondary=" + (s == null ? "" : URLEncoder.encode(s.trim(), "utf-8"));
         } catch (UnsupportedEncodingException e) {
             // we always have "UTF-8" but anyway
             throw new RuntimeException("utf-8 not supported", e);

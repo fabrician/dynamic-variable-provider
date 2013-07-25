@@ -58,7 +58,7 @@ public class Rule implements Comparable<Rule>, Cloneable {
             return true;
         } else {
             Matcher m = ptnNumbers.matcher(key);
-            if ( m.matches() ){
+            if ( m.matches() && key.trim().length() > 0 ){
                 double v = Double.parseDouble(key);
                 if ( checkRange(ptnRange, v, keyRule) ){
                     return true;
