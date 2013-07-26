@@ -28,6 +28,7 @@ import com.datasynapse.fabric.admin.info.ComponentInfo;
 import com.datasynapse.fabric.admin.info.FabricEngineInfo;
 import com.datasynapse.fabric.admin.info.StackInfo;
 import com.datasynapse.fabric.broker.userartifact.variable.AbstractDynamicVariableProvider;
+import com.datasynapse.fabric.util.ContainerUtils;
 
 public class VariableProviderProxy extends AbstractDynamicVariableProvider {
 
@@ -35,18 +36,18 @@ public class VariableProviderProxy extends AbstractDynamicVariableProvider {
     private String primaryKey;
     private String secondaryKey;
     private JexlEngine jexl = new JexlEngine();
-    
-    
+
     public Properties getVariables(FabricEngineInfo engineInfo, StackInfo stackInfo, ComponentInfo componentInfo) {
-        
+
         MapContext jc = new MapContext();
         jc.set("engineInfo", engineInfo);
         jc.set("stackInfo", stackInfo);
         jc.set("componentInfo", componentInfo);
         String p = evaluate(getPrimaryKey(), jc);
-        String s = evaluate(getSecondaryKey(), jc);;
+        String s = evaluate(getSecondaryKey(), jc);
+        ;
 
-        if ( getServerURL() == null ){
+        if (getServerURL() == null) {
             throw new IllegalArgumentException("serverURL is not set");
         }
         String u = getServerURL();
@@ -65,33 +66,38 @@ public class VariableProviderProxy extends AbstractDynamicVariableProvider {
             JSONTokener tokener = new JSONTokener(new InputStreamReader(is, "utf-8"));
             JSONObject jObj = new JSONObject(tokener);
             Properties r = new Properties();
+            @SuppressWarnings("unchecked")
             Iterator<String> keys = jObj.keys();
-            while ( keys.hasNext() ){
+            while (keys.hasNext()) {
                 String k = keys.next();
                 r.put(k, jObj.getString(k));
             }
+            String msg = "no variables";
+            if (r.size() > 0) {
+                msg = r.toString();
+            }
+            ContainerUtils.getLogger(this).fine("Provided " + msg + " to Engine " + engineInfo.getUsername() + "-" + engineInfo.getInstance());
             return r;
-        }catch (IOException ioe){
+        } catch (IOException ioe) {
             throw new RuntimeException("failed to connection to web server", ioe);
         } catch (JSONException je) {
             throw new RuntimeException("failed to parse response from web server", je);
-        }finally {
-            try{
-                if ( is != null ){
+        } finally {
+            try {
+                if (is != null) {
                     is.close();
-                }                
-            }catch (Exception e){
-                
-            }
-        }            
+                }
+            } catch (Exception e) {
 
+            }
+        }
     }
 
     private String evaluate(String propExpr, JexlContext jc) {
-        if (propExpr != null ){
-            Expression e = jexl.createExpression( propExpr );
+        if (propExpr != null) {
+            Expression e = jexl.createExpression(propExpr);
             return (String) e.evaluate(jc);
-        } else { 
+        } else {
             return null;
         }
     }
@@ -125,5 +131,4 @@ public class VariableProviderProxy extends AbstractDynamicVariableProvider {
     public void setSecondaryKey(String secondaryKey) {
         this.secondaryKey = secondaryKey;
     }
-
 }
