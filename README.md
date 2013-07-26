@@ -8,8 +8,8 @@ Introduction
 This is a Web based implementation of a Dynamic Variable Provider of TIBCO Silver Fabric 
 5.5. The project consists of a "Dynamic Variable Provider" running inside Silver Fabric Broker 
 and a stand-alone "Web Application" that provides variables. At run time the "Dynamic Variable 
-Provider" queries the "Web Application" for variable requests via HTTP channel. The "Web Application" 
-serves multiple variable providers, users can manage rules of variable provider using Web UI.
+Provider" queries the "Web Application" for variables via an HTTP request. The "Web Application" 
+supports multiple variable providers and users can manage them using the Web UI.
 
 The variable rules are maintained in a table layout, for example:
 ```
@@ -20,9 +20,9 @@ The variable rules are maintained in a table layout, for example:
 
 The "Dynamic Variable Provider" implements the DynamicVariableProvider interface of Silver Fabric 5.5. 
 It can pick up two Silver Fabric runtime properties as primary and secondary 
-keys. At run time these keys are evaluated inside the Broker and the variable request is submitted the 
-the "Web Server" via HTTP connection. The "Web Server" evaluates the variable rules and returns generated 
-set of Variable.
+keys. At run time these keys are evaluated inside the Broker and the variable request is submitted to the 
+the "Web Server" via an HTTP connection. The "Web Server" evaluates the variable rules and returns a generated 
+set of variable values.
 
 Servlet Container
 --------------------------------------
@@ -35,7 +35,7 @@ Supported Platforms
  
 Required 3rd Libraries before Build
 --------------------------------------
-* Download SilverFabricSDK.jar from Silver Fabric 5.5, copy it to the current Directory. See property "fabric-location" in pom.xml
+* Download SilverFabricSDK.jar from Silver Fabric 5.5, copy it to the current Directory. See property "fabric-location" in the pom.xml
 
 Build
 --------------------------------------
@@ -47,9 +47,9 @@ look into target/dynamic.variable.provider-1.0-SNAPSHOT.zip
 Installation
 --------------------------------------
 Unzip target/dynamic.variable.provider-1.0-SNAPSHOT.zip.
-* ./variableProviders contains the "Dynamic Variable Providers", it needs to be deployed into Silver Fabric 5.5 server.
-* ./webapps contains a '.war' file for the "Web Application", it can be deployed to a web server that supports Servlet 3.0 API.
-* ./hsqldb contains the sample hsqldb database. To start it just call either "run.bat" or "run.sh".
+* ./variableProviders contains the "Dynamic Variable Provider" implementation.  It needs to be deployed into a Silver Fabric 5.5 Broker.
+* ./webapps contains a '.war' file for the "Web Application".  It must be deployed to a web server that supports the Servlet 3.0 API.
+* ./hsqldb contains the sample hsqldb database.  To start it just call either "run.bat" or "run.sh".
  
 Configure Dynamic Variable Provider
 --------------------------------------
@@ -57,12 +57,12 @@ You need to configure the "name", "serverURL", "primaryKey" and "secondaryKey" p
 Here is an example:
 ```
 <dynamicVariableProvider class="org.fabrican.extension.variable.provider.VariableProviderProxy">
-    <property name="name" value="test"/>
-    <property name="description" value="MY_PROVIDER_DESCRIPTION"/>
+    <property name="name" value="DynamicVariableProvider"/>
+    <property name="description" value="Dynamic Variable Provider from Fabrician.org"/>
     <property name="enabled" value="true"/>
-    <property name="serverUrl" value="http://localhost:9090/dvp/variables/test"/>
+    <property name="serverUrl" value="http://localhost:8080/dvp/variables/test"/>
     <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
-    <property name="primaryKey" value="engineInfo.properties.USERNAME"/>
+    <property name="primaryKey" value="engineInfo.username"/>
     <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
     <property name="secondaryKey" value="stackInfo.name"/>
 </dynamicVariableProvider>
@@ -70,13 +70,13 @@ Here is an example:
 In this example:
 * you need to create a variable provider "test" in the "Web Application"
 * the context of "Web Application" is "dvp"
-* you can configure "primaryKey" and "secondaryKey" using "commons-jexl" expression. The expression must be started 
+* you can configure "primaryKey" and "secondaryKey" using "commons-jexl" expressions. The expression must be started 
 with either "engineInfo.", "stackInfo." or "componentInfo.
 
 Start Database
 --------------------------------------
-There is a sample HSQLDB database. To start, run either "hsqldb/run.bat" or "hsqldb/run.sh". Its listen port is "5000";
-the initial user name and password is admin/admin.
+There is a sample HSQLDB database. To start, run either "hsqldb/run.bat" or "hsqldb/run.sh". Its default listen port is "5000".
+The initial user name and password is admin/admin.
 Reference hsqldb/vprovider.script if you need to run it on other database servers.
 
 Running the Web Application
@@ -118,3 +118,14 @@ Where there are multiple matches on the same variable name:
 * otherwise, the last rule takes precedence. 
 key cell. 
   
+
+Using the Variables
+--------------------------------------
+Create a variable in your Component or Enabler that retrieves the value from the provider.
+```
+${<name_of_provider>.getProperty('<name_of_property>')}
+```
+For example:
+```
+${DynamicVariableProvider.getProperty('PRODUCTION_MODE')}
+```

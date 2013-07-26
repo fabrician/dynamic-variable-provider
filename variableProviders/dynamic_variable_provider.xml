@@ -1,6 +1,6 @@
 <dynamicVariableProvider class="org.fabrican.extension.variable.provider.VariableProviderProxy">
-    <property name="name" value="MY_PROVIDER_NAME"/>
-    <property name="description" value="MY_PROVIDER_DESCRIPTION"/>
+    <property name="name" value="DynamicVariableProvider"/>
+    <property name="description" value="Dynamic Variable Provider from Fabrician.org"/>
     <property name="enabled" value="true"/>
     <property name="serverUrl" value="http://{host}:{port}/{app_context}/variables/{MY_PROVIDER_NAME}"/>
     <!--  commons-jexl expressions, must be started with either "engineInfo.", "stackInfo." or "componentInfo." -->
