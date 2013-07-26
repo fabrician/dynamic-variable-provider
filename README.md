@@ -26,7 +26,7 @@ set of variable values.
 
 Servlet Container
 --------------------------------------
-* Requires server 3.0 container.
+* Requires a Serlvet 3.0 container such as Apache Tomcat 7.
 
 Supported Platforms
 --------------------------------------
@@ -35,7 +35,7 @@ Supported Platforms
  
 Required 3rd Libraries before Build
 --------------------------------------
-* Download SilverFabricSDK.jar from Silver Fabric 5.5, copy it to the current Directory. See property "fabric-location" in the pom.xml
+* Download SilverFabricSDK.jar from Silver Fabric 5.5, copy it to the current directory. See property "fabric-location" in the pom.xml
 
 Build
 --------------------------------------
