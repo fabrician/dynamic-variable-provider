@@ -233,5 +233,10 @@
 			<artifactId>jquery</artifactId>
 			<version>1.9.1</version>
 		</dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>html5shiv</artifactId>
+            <version>3.6.2</version>
+        </dependency>		
 	</dependencies>
 </project>

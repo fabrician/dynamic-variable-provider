@@ -32,6 +32,7 @@ Supported Platforms
 --------------------------------------
 * Silver Fabric 5.5
 * Windows, Linux
+* Currently the Web UI is not supported on IE6, IE7 and IE8
  
 Required 3rd Libraries before Build
 --------------------------------------
