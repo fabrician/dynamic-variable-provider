@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2013 TIBCO Software Inc. All Rights Reserved.
+ *
+ * Use is subject to the terms of the TIBCO license terms accompanying the download of this code.
+ * In most instances, the license terms are contained in a file named license.txt.
+ */
 package org.fabrican.extension.variable.provider.rules;
 
 import java.io.InputStream;
@@ -12,12 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-/*
- * Copyright (c) 2013 TIBCO Software Inc. All Rights Reserved.
- *
- * Use is subject to the terms of the TIBCO license terms accompanying the download of this code.
- * In most instances, the license terms are contained in a file named license.txt.
- */
 public class RuleSetJSONHelper {
     public static final String KEY_NAME = "name";
     public static final String KEY_DESC = "desc";

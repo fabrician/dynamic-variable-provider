@@ -9,9 +9,6 @@ package org.fabrican.extension.variable.provider.rules;
 import java.io.IOException;
 import java.util.List;
 
-
-
-
 public class SmallRuleSet extends RuleSet{
 
     @Override
@@ -38,5 +35,4 @@ public class SmallRuleSet extends RuleSet{
     protected Object clone() throws CloneNotSupportedException {
         throw new RuntimeException("Operation not supported");
     }
-
 }
