@@ -100,7 +100,7 @@ Password=admin
 The connection properties are stored using Java Preference APIs. With proper Server security policy it can be retrievable when
 the web server restarts. 
 
-The webapp can be also run locally with Jetty.  The application URL with Jetty will be 'http://<host>:<port>'.
+The webapp can be also run locally with Jetty.  The application URL with Jetty will be ``` http://<host>:<port> ```.
 ```
 mvn jetty:run-war
 ```
