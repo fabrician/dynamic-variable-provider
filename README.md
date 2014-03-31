@@ -27,6 +27,7 @@ set of variable values.
 Servlet Container
 --------------------------------------
 * Requires a Serlvet 3.0 container such as Apache Tomcat 7.
+* Requires Java 1.7 to run the Servelt Container.
 
 Supported Platforms
 --------------------------------------
@@ -40,6 +41,7 @@ Required 3rd Libraries before Build
 
 Build
 --------------------------------------
+Needs JDK 1.7 to build the package
 ```
 mvn package
 ```
